@@ -18,9 +18,9 @@ interface InventoryItem {
 
 // List of fruits and vegetables we want to detect
 const VALID_ITEMS = new Set([
-  'apple', 'orange', 'banana', 'carrot', 'broccoli',
-  'tomato', 'cucumber', 'potato', 'onion', 'lemon'
+  "Burger", "Wrap", "Pizza", "Tacos", "Sandwich", "Grilled Cheese", "Falafel", "Burrito", "Nuggets", "Mozzarella Sticks", "Onion Rings", "French Fries", "Samosa", "Spring Rolls", "Hot Dog", "Wings", "Quesadilla", "Sausage", "Kebab", "Kebab Wrap", "Pizza Slice", "Apple", "Banana", "Orange", "Strawberry", "Watermelon", "Grapes", "Pineapple", "Mango", "Pear", "Lemon", "Tomato", "Carrot", "Potato", "Broccoli", "Cucumber", "Bell Pepper", "Lettuce", "Onion", "Eggplant", "Spinach", "Zucchini", "Cauliflower", "Sweet Potato", "Pumpkin", "Chickpeas", "Lentils", "Green Beans", "Peas", "Avocado", "Falafel", "Pizza", "Burger", "Wrap", "Sandwich", "Grilled Cheese", "Mozzarella Sticks", "Tacos", "Samosa", "Spring Rolls", "Burrito", "Nuggets", "French Fries", "Onion Rings", "Pita Bread", "Naan", "Bagels", "Croissant", "Whole Wheat Bread", "Sourdough", "Focaccia", "Flatbread", "Tortilla", "Chia Seeds", "Sunflower Seeds", "Pumpkin Seeds", "Almonds", "Cashews", "Peanuts", "Walnuts", "Pistachios", "Soy Milk", "Almond Milk", "Oat Milk", "Rice Milk", "Tofu", "Tempeh", "Seitan", "Quinoa", "Couscous", "Barley", "Polenta", "Hummus", "Guacamole"
 ]);
+
 
 export function VisualInventory() {
   const webcamRef = useRef<Webcam>(null);
