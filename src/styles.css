@@ -1,0 +1,54 @@
+/* Main Content */
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+/* Card Styles */
+.card {
+    background: #fff;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title i {
+    margin-right: 8px;
+}
+
+.progress {
+    height: 8px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.counter {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.table thead th {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Tab Content Styling */
+.tab-pane {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
