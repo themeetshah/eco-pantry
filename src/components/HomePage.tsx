@@ -7,6 +7,7 @@ function EditInventoryModal({ item, isOpen, onClose, onSave }) {
     cost: item?.cost || '',
     expiry: item?.expiry || '',
     status: item?.status || 'Good', // Defaulting to 'Good'
+    quantity: item?.quantity || 0, // Adding quantity to the form
   });
 
   useEffect(() => {
@@ -15,6 +16,7 @@ function EditInventoryModal({ item, isOpen, onClose, onSave }) {
         cost: item.cost,
         expiry: item.expiry,
         status: item.status,
+        quantity: item.quantity, // Initialize quantity from the item
       });
     }
   }, [item]);
@@ -68,6 +70,16 @@ function EditInventoryModal({ item, isOpen, onClose, onSave }) {
               <option value="Warning">Warning</option>
               <option value="Danger">Danger</option>
             </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Quantity</label>
+            <input
+              type="number"
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleInputChange}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
           </div>
         </div>
         <div className="mt-4 flex justify-end space-x-2">
@@ -204,7 +216,6 @@ export function HomePage() {
               <tr>
                 <th className="py-2 px-4 text-left border-b-2 border-gray-200">Item</th>
                 <th className="py-2 px-4 text-left border-b-2 border-gray-200">Quantity</th>
-                {/* <th className="py-2 px-4 text-left border-b-2 border-gray-200">Status</th> */}
                 <th className="py-2 px-4 text-left border-b-2 border-gray-200">Expiry</th>
                 <th className="py-2 px-4 text-left border-b-2 border-gray-200">Cost</th>
                 <th className="py-2 px-4 text-left border-b-2 border-gray-200">Actions</th>
@@ -215,18 +226,6 @@ export function HomePage() {
                 <tr key={item.id} className="hover:bg-gray-50">
                   <td className="py-2 px-4">{item.name}</td>
                   <td className="py-2 px-4">{item.quantity}</td>
-                  {/* <td className="py-2 px-4">
-                    <span
-                      className={`py-1 px-3 rounded-full ${item.status === 'Good'
-                        ? 'bg-green-100 text-green-600'
-                        : item.status === 'Warning'
-                          ? 'bg-yellow-100 text-yellow-600'
-                          : 'bg-red-100 text-red-600'
-                        }`}
-                    >
-                      {item.status}
-                    </span>
-                  </td> */}
                   <td className="py-2 px-4">{item.expiry}</td>
                   <td className="py-2 px-4">{'₹' + item.cost}</td>
                   <td className="py-2 px-4">
@@ -266,4 +265,3 @@ const StatCard = ({ icon, title, value, trend }) => (
     </div>
   </div>
 );
-

@@ -18,9 +18,8 @@ interface InventoryItem {
 
 // List of fruits and vegetables we want to detect
 const VALID_ITEMS = new Set([
-  "Burger", "Wrap", "Pizza", "Tacos", "Sandwich", "Grilled Cheese", "Falafel", "Burrito", "Nuggets", "Mozzarella Sticks", "Onion Rings", "French Fries", "Samosa", "Spring Rolls", "Hot Dog", "Wings", "Quesadilla", "Sausage", "Kebab", "Kebab Wrap", "Pizza Slice", "Apple", "Banana", "Orange", "Strawberry", "Watermelon", "Grapes", "Pineapple", "Mango", "Pear", "Lemon", "Tomato", "Carrot", "Potato", "Broccoli", "Cucumber", "Bell Pepper", "Lettuce", "Onion", "Eggplant", "Spinach", "Zucchini", "Cauliflower", "Sweet Potato", "Pumpkin", "Chickpeas", "Lentils", "Green Beans", "Peas", "Avocado", "Falafel", "Pizza", "Burger", "Wrap", "Sandwich", "Grilled Cheese", "Mozzarella Sticks", "Tacos", "Samosa", "Spring Rolls", "Burrito", "Nuggets", "French Fries", "Onion Rings", "Pita Bread", "Naan", "Bagels", "Croissant", "Whole Wheat Bread", "Sourdough", "Focaccia", "Flatbread", "Tortilla", "Chia Seeds", "Sunflower Seeds", "Pumpkin Seeds", "Almonds", "Cashews", "Peanuts", "Walnuts", "Pistachios", "Soy Milk", "Almond Milk", "Oat Milk", "Rice Milk", "Tofu", "Tempeh", "Seitan", "Quinoa", "Couscous", "Barley", "Polenta", "Hummus", "Guacamole"
+  "burger", "wrap", "pizza", "tacos", "sandwich", "grilled cheese", "falafel", "burrito", "nuggets", "mozzarella sticks", "onion rings", "french fries", "samosa", "spring rolls", "hot dog", "wings", "quesadilla", "sausage", "kebab", "kebab wrap", "pizza slice", "apple", "banana", "orange", "strawberry", "watermelon", "grapes", "pineapple", "mango", "pear", "lemon", "tomato", "carrot", "potato", "broccoli", "cucumber", "bell pepper", "lettuce", "onion", "eggplant", "spinach", "zucchini", "cauliflower", "sweet potato", "pumpkin", "chickpeas", "lentils", "green beans", "peas", "avocado", "falafel", "pizza", "burger", "wrap", "sandwich", "grilled cheese", "mozzarella sticks", "tacos", "samosa", "spring rolls", "burrito", "nuggets", "french fries", "onion rings", "pita bread", "naan", "bagels", "croissant", "whole wheat bread", "sourdough", "focaccia", "flatbread", "tortilla", "chia seeds", "sunflower seeds", "pumpkin seeds", "almonds", "cashews", "peanuts", "walnuts", "pistachios", "soy milk", "almond milk", "oat milk", "rice milk", "tofu", "tempeh", "seitan", "quinoa", "couscous", "barley", "polenta", "hummus", "guacamole"
 ]);
-
 
 export function VisualInventory() {
   const webcamRef = useRef<Webcam>(null);
@@ -36,6 +35,7 @@ export function VisualInventory() {
       try {
         await tf.ready();
         const loadedModel = await cocoSsd.load();
+        console.log("Model Loaded");  // Debugging log
         setModel(loadedModel);
         setIsLoading(false);
       } catch (error) {
@@ -52,7 +52,9 @@ export function VisualInventory() {
     // Count detected items
     const detectedCounts: Record<string, number> = {};
     detections.forEach(detection => {
-      if (VALID_ITEMS.has(detection.class.toLowerCase())) {
+      const itemClass = detection.class.toLowerCase();
+      console.log(`Detected: ${itemClass}`);  // Debugging log
+      if (VALID_ITEMS.has(itemClass)) {
         detectedCounts[detection.class] = (detectedCounts[detection.class] || 0) + 1;
       }
     });
@@ -70,7 +72,7 @@ export function VisualInventory() {
 
     // Call the API to update/add the items to the database
     Object.entries(detectedCounts).forEach(([item, count]) => {
-      updateInventoryItem(item, count); // Call API to add/update the item
+      updateInventoryItem(item, 1); // Call API to add/update the item
     });
   }, [detections]);
 
@@ -90,11 +92,14 @@ export function VisualInventory() {
 
     // Make detection
     const predictions = await model.detect(video);
+    console.log(predictions);  // Debugging log to check predictions
 
     // Filter for fruits and vegetables only
     const filteredPredictions = predictions.filter(prediction =>
       VALID_ITEMS.has(prediction.class.toLowerCase())
     );
+
+    console.log(`Filtered predictions: ${filteredPredictions.length}`);  // Debugging log for filtered predictions
 
     setDetections(filteredPredictions);
 
@@ -131,13 +136,16 @@ export function VisualInventory() {
   };
 
   useEffect(() => {
-    if (!isLoading && isCameraOn) {
+    if (isCameraOn) {
       detect();
     }
-  }, [isLoading, isCameraOn, model]);
+  }, [isCameraOn, model]);
 
   const toggleCamera = () => {
     setIsCameraOn(!isCameraOn);
+    if (isCameraOn) {
+      detect();
+    }
   };
 
   // Function to call the API to add/update inventory
@@ -160,7 +168,7 @@ export function VisualInventory() {
           cost,
           expiry,
           status,
-          quantity,
+          quantity: 1,
         }),
       });
 
