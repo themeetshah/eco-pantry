@@ -13,6 +13,9 @@ Our application connects users with the world of recipes by leveraging the Spoon
 
 ---
 
+##  Demo  
+- Preview the project [here](https://www.youtube.com/watch?v=YKz4VCSh2pM).
+
 ## Features
 
 - **Ingredient-based Recipe Generation**: Users can input their available ingredients, and the app will generate recipe suggestions based on those ingredients.
